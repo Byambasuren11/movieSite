@@ -25,7 +25,7 @@ const Top = () => {
         <h3 className="text-foreground text-2xl font-semibold">top</h3>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
           {top.slice(0, 10).map((element) => (
-            <div className=" w-[230px] rounded-lg">
+            <div className=" w-[230px] rounded-xl overflow-hidden">
               <img
                 className=" h-[340px] object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}

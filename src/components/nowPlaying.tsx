@@ -6,9 +6,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Star from "./Star";
 
 type Movie = {
-  vote_avarage: number;
+  vote_average: number;
   overview: string;
   original_title: string;
   backdrop_path: string;
@@ -43,15 +44,13 @@ const NowPlaying = () => {
               src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
               alt={element.original_title}
             />
-            <div className="flex flex-col w-[400px] h-[400px] absolute z-10 t-0">
-              <p className=" text-[20px] text-white">
+            <div className="flex flex-col w-[400px] h-[400px] absolute z-10 top-40 left-24 p-5 space-y-4 lg:p-0">
+              <p className=" w-52 text-2xl font-semibold truncate text-white">
                 {element.original_title}
               </p>
-              <p className=" text-[20px] text-white">
+              <p className="flex text-foreground text-sm items-center gap-x-1 text-white "><Star/> {element.vote_average}<span className="text-muted-foreground text-xs">/10</span></p>
+              <p className="text-white w-[302px] text-sm line-clamp-5">
                 {element.overview}
-              </p>
-              <p className=" text-[20px] text-white">
-                {element.vote_avarage}
               </p>
             </div>
           </CarouselItem>
