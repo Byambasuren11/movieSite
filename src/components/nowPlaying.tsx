@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,18 +7,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-
 type Movie = {
-  name: string;
-  imdb: number;
-  descriftion: string;
-  img:string
+  vote_avarage: number;
+  overview: string;
+  original_title: string;
+  backdrop_path: string;
 };
 
 const NowPlaying = () => {
-  // const [movies]
-  const [movies, setMovies] = useState([]);
-  const [hoho,setHoho]=useState([])
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   const getPicture = async () => {
     try {
@@ -30,26 +26,41 @@ const NowPlaying = () => {
       setMovies(result.results);
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
- console.log(movies);
-  movies.map(()=>{
-
-  })
+  console.log(movies);
   useEffect(() => {
     getPicture();
   }, []);
-  return <>
-  <Carousel>
-          <CarouselContent className="w-full h-[400px]">
-            <CarouselItem ><img src="movies[0].backdrop_bath"/></CarouselItem>
-            <CarouselItem>...</CarouselItem>
-            <CarouselItem>...</CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-  </>;
+
+  return (
+    <Carousel>
+      <CarouselContent className="w-full h-[550px]">
+        {movies.slice(0, 10).map((element, index) => (
+          <CarouselItem key={index} className="relative">
+            <img
+              className="w-full h-full object-cover"
+              src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
+              alt={element.original_title}
+            />
+            <div className="flex flex-col w-[400px] h-[400px] absolute z-10 t-0">
+              <p className=" text-[20px] text-white">
+                {element.original_title}
+              </p>
+              <p className=" text-[20px] text-white">
+                {element.overview}
+              </p>
+              <p className=" text-[20px] text-white">
+                {element.vote_avarage}
+              </p>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className="absolute left-10" />
+      <CarouselNext className="absolute right-10" />
+    </Carousel>
+  );
 };
+
 export default NowPlaying;
