@@ -15,13 +15,13 @@ export default function Home() {
     <>
       <div className="w-full flex flex-col justify-center items-center">
         <Header />
-        <Movie/>
-        
-        {/* <NowPlaying />
+        {/* <Movie/> */}
+
+        <NowPlaying />
         <Coming setClick={setClick}/>
         <Popular setClick={setClick}/>
         <Top setClick={setClick}/>
-        <Footer /> */}
+        <Footer />
       </div>
     </>
   );

@@ -38,8 +38,8 @@ const Top = (props:ComingProps) => {
         <h3>see more</h3>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
-          {top.slice(0, 10).map((element) => (
-            <div className=" w-[236.5px] rounded-xl overflow-hidden">
+          {top.slice(0, 10).map((element, index) => (
+            <div key={index} className=" w-[236.5px] rounded-xl overflow-hidden">
               <img
                 className=" h-[340px] object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
