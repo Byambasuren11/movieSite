@@ -36,7 +36,7 @@ const NowPlaying = () => {
 
   return (
     <Carousel>
-      <CarouselContent className="w-full h-[550px]">
+      <CarouselContent className="w-full h-[600px] mt-5">
         {movies.slice(0, 10).map((element, index) => (
           <CarouselItem key={index} className="relative">
             <img
