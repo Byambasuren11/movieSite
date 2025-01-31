@@ -51,7 +51,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex justify-between ">
-          <div className="w-[280px] h-[428px] bg-black">
+          <div className="w-[280px] h-[428px] bg-black rounded-sm overflow-hidden">
             <img
               className="h-[428px] object-cover"
               src={`https://image.tmdb.org/t/p/original${clickedMovie.backdrop_path}`}
@@ -69,7 +69,7 @@ export default function Home() {
         </div>
         <div className="text-base">{clickedMovie.overview}</div>
         <div className="flex flex-col space-y-5 text-foreground mb-8">
-          <div className=" font-bold w-16 mr-13">zohiolc</div>
+          <div className=" font-bold w-16 mr-13">zoh</div>
           <div className=" font-bold w-16 mr-13">writers</div>
           <div className=" font-bold w-16 mr-13">Starts</div>
         </div>
