@@ -1,17 +1,21 @@
+import { useParams } from "next/navigation";
 import Star from "./Star";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import Link from "next/link";
 
 type ComingProps = {
   setClick: Dispatch<SetStateAction<boolean>>;
+  click: boolean
 };
 type Movie = {
   vote_average: number;
   overview: string;
   title: string;
   backdrop_path: string;
+  id: number
 };
 export const Coming = (props: ComingProps) => {
-  const { setClick } = props;
+  const { setClick, click } = props;
   const [coming, setComing] = useState<Movie[]>([]);
 
   const getUpComing = async () => {
@@ -25,14 +29,7 @@ export const Coming = (props: ComingProps) => {
       console.log(error);
     }
   };
-  const onClick = () => {
-    console.log("hello");
-    setClick(true);
-  };
-  const seeMore = () => {
-    console.log("hell");
-  };
-  console.log("coming", coming);
+   console.log("coming", coming);
   useEffect(() => {
     getUpComing();
   }, []);
@@ -41,16 +38,16 @@ export const Coming = (props: ComingProps) => {
       <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
-          <h3 onClick={seeMore} className="cursor-pointer">
+          <h3 className="cursor-pointer">
             see more
           </h3>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
           {coming.slice(0, 10).map((element, index) => (
-            <div
+            <Link href={`/details/${element.id}`}
+            // ID={id}
               key={index}
               className=" w-[236.5px] rounded-lg overflow-hidden cursor-pointer"
-              onClick={onClick}
             >
               <img
                 className=" h-[340px] object-cover"
@@ -58,14 +55,14 @@ export const Coming = (props: ComingProps) => {
               />
               <div className="h-[96px] bg-gray-200 p-2 text-extrabold">
                 <p className="flex text-foreground text-sm items-center gap-x-1">
-                  <Star /> {element.vote_average}
+                  <Star /> {element.vote_average.toFixed(1)}
                   <span className="text-muted-foreground text-xs">/10</span>
                 </p>
                 <p className="h-14 overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
                   {element.title}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

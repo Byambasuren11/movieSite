@@ -26,7 +26,7 @@ type ComingProps = {
       console.log(error);
     }
   };
-  console.log("popular", popular);
+  // console.log("popular", popular);
   useEffect(() => {
     getPopular();
   }, []);

@@ -1,5 +1,4 @@
 "use client";
-import Movie from "@/components/Clicked-Movie";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import NowPlaying from "@/components/nowPlaying";
@@ -15,10 +14,8 @@ export default function Home() {
     <>
       <div className="w-full flex flex-col justify-center items-center">
         <Header />
-        {/* <Movie/> */}
-
         <NowPlaying />
-        <Coming setClick={setClick}/>
+        <Coming setClick={setClick} click={click}/>
         <Popular setClick={setClick}/>
         <Top setClick={setClick}/>
         <Footer />

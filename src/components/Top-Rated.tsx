@@ -26,7 +26,7 @@ const Top = (props:ComingProps) => {
       console.log(error);
     }
   };
-  console.log("top", top);
+  // console.log("top", top);
   useEffect(() => {
     getTop();
   }, []);

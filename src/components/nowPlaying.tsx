@@ -29,7 +29,7 @@ const NowPlaying = () => {
       console.log(error);
     }
   };
-  console.log(movies);
+  // console.log(movies);
   useEffect(() => {
     getPicture();
   }, []);
