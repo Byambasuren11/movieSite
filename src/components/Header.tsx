@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger } from "@/components/ui/select";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
-
 const Header = () => {
   const { setTheme, theme } = useTheme();
-  console.log("theme",theme)
+  console.log("theme", theme);
   const onClick = () => {
     if (theme === "dark") {
       setTheme("light");
