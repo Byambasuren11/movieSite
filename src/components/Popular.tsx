@@ -11,8 +11,8 @@ type Movie = {
 type ComingProps = {
   setClick: Dispatch<SetStateAction<boolean>>;
 };
- const Popular = (props:ComingProps) => {
-  const {setClick}=props
+const Popular = (props: ComingProps) => {
+  const { setClick } = props;
   const [popular, setPopular] = useState<Movie[]>([]);
 
   const getPopular = async () => {
@@ -33,21 +33,28 @@ type ComingProps = {
   return (
     <>
       <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
-      <div className="flex justify-between">
-        <h3 className="text-foreground text-2xl font-semibold">Popular</h3>
-        <h3>see more</h3>
+        <div className="flex justify-between">
+          <h3 className="text-foreground text-2xl font-semibold">Popular</h3>
+          <h3>see more</h3>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
-          {popular.slice(0, 10).map((element , index) => (
-            <div key={index} className=" w-[236.5px] rounded-xl overflow-hidden">
+          {popular.slice(0, 10).map((element, index) => (
+            <div
+              key={index}
+              className=" w-[236.5px] rounded-xl overflow-hidden"
+            >
               <img
                 className=" h-[340px] object-cover"
-                src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 p-2 text-extrabold">
-                <p className="flex text-foreground text-sm items-center gap-x-1"><Star/> {element.vote_average}<span className="text-muted-foreground text-xs">/10</span></p>
-                <p className="h-14 overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">{element.title}</p>
-
+                <p className="flex text-foreground text-sm items-center gap-x-1">
+                  <Star /> {element.vote_average}
+                  <span className="text-muted-foreground text-xs">/10</span>
+                </p>
+                <p className="h-14 overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
+                  {element.title}
+                </p>
               </div>
             </div>
           ))}

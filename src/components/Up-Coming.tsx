@@ -5,14 +5,14 @@ import Link from "next/link";
 
 type ComingProps = {
   setClick: Dispatch<SetStateAction<boolean>>;
-  click: boolean
+  click: boolean;
 };
 type Movie = {
   vote_average: number;
   overview: string;
   title: string;
   backdrop_path: string;
-  id: number
+  id: number;
 };
 export const Coming = (props: ComingProps) => {
   const { setClick, click } = props;
@@ -29,7 +29,7 @@ export const Coming = (props: ComingProps) => {
       console.log(error);
     }
   };
-   console.log("coming", coming);
+  console.log("coming", coming);
   useEffect(() => {
     getUpComing();
   }, []);
@@ -38,20 +38,19 @@ export const Coming = (props: ComingProps) => {
       <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
-          <h3 className="cursor-pointer">
-            see more
-          </h3>
+          <h3 className="cursor-pointer">see more</h3>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
           {coming.slice(0, 10).map((element, index) => (
-            <Link href={`/details/${element.id}`}
-            // ID={id}
+            <Link
+              href={`/details/${element.id}`}
+              // ID={id}
               key={index}
               className=" w-[236.5px] rounded-lg overflow-hidden cursor-pointer"
             >
               <img
                 className=" h-[340px] object-cover"
-                src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 p-2 text-extrabold">
                 <p className="flex text-foreground text-sm items-center gap-x-1">

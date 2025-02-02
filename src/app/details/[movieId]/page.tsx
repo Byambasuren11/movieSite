@@ -47,7 +47,7 @@ export default function Home() {
     getClickedMovie();
     getDirector();
   }, []);
-  console.log("dcd", clickedMovie);
+  console.log("dcd", movie);
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <Header />
@@ -81,7 +81,10 @@ export default function Home() {
         </div>
         <div className="flex gap-2">
           {clickedMovie.genres?.map((element, index) => (
-            <div className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit">
+            <div
+              key={index}
+              className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
+            >
               {element.name}
             </div>
           ))}
@@ -90,7 +93,14 @@ export default function Home() {
         <div className="flex flex-col space-y-5 text-foreground mb-8">
           <div className=" font-bold w-16 mr-13">zoh</div>
           <div className=" font-bold w-16 mr-13">writers</div>
-          <div className=" font-bold w-16 mr-13">Starts</div>
+          <div className=" font-bold w-16 mr-13 flex">
+            <div>Stars</div>
+            <div className="flex gap-10">
+              {movie.cast.slice(0, 5)?.map((element, index) => (
+                <p key={index}>{element.name}</p>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">
