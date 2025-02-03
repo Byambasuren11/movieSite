@@ -1,21 +1,17 @@
 import { useParams } from "next/navigation";
 import Star from "./Star";
-import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-type ComingProps = {
-  setClick: Dispatch<SetStateAction<boolean>>;
-  click: boolean;
-};
 type Movie = {
   vote_average: number;
   overview: string;
   title: string;
   backdrop_path: string;
   id: number;
+  poster_path:string;
 };
-export const Coming = (props: ComingProps) => {
-  const { setClick, click } = props;
+export const Coming = () => {
   const [coming, setComing] = useState<Movie[]>([]);
 
   const getUpComing = async () => {
@@ -24,6 +20,7 @@ export const Coming = (props: ComingProps) => {
         "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=59e727c8b34f9b1acd7cf78c59abfe03"
       );
       const result = await response.json();
+      console.log(result)
       setComing(result.results);
     } catch (error) {
       console.log(error);
@@ -38,7 +35,7 @@ export const Coming = (props: ComingProps) => {
       <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
-          <h3 className="cursor-pointer">see more</h3>
+          <Link href={`/category/upcoming`}><h3 className="cursor-pointer">see more</h3></Link>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
           {coming.slice(0, 10).map((element, index) => (
@@ -49,7 +46,7 @@ export const Coming = (props: ComingProps) => {
               className=" w-[236.5px] rounded-lg overflow-hidden cursor-pointer"
             >
               <img
-                className=" h-[340px] object-cover"
+                className=" h-[340px] w-full object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 p-2 text-extrabold">

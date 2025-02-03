@@ -4,6 +4,9 @@ import Star from "@/components/Star";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
+import Footer from "@/components/Footer";
+
 type Movie = {
   vote_average: number;
   overview: string;
@@ -11,6 +14,7 @@ type Movie = {
   release_date: string;
   backdrop_path: string;
   id: number;
+  poster_path:string;
 };
 
 export default function Home() {
@@ -18,6 +22,7 @@ export default function Home() {
   // console.log(id);
   const [clickedMovie, setClickedMovie] = useState<Movie>({} as Movie);
   const [movie, setMovie] = useState<Movie>({} as Movie);
+  const [similarMovie, setSimilarMovie] = useState<Movie>({} as Movie);
   const getClickedMovie = async () => {
     try {
       const response = await fetch(
@@ -43,9 +48,23 @@ export default function Home() {
     }
   };
   console.log("dsdsad", clickedMovie);
+  const getSimilarMovie = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}/similar?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
+      );
+      const result = await response.json();
+      console.log(result);
+      setSimilarMovie(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log("similar", similarMovie);
   useEffect(() => {
     getClickedMovie();
     getDirector();
+    getSimilarMovie();
   }, []);
   console.log("dcd", movie);
   return (
@@ -90,10 +109,23 @@ export default function Home() {
           ))}
         </div>
         <div className="text-base">{clickedMovie.overview}</div>
-        <div className="flex flex-col space-y-5 text-foreground mb-8">
-          <div className=" font-bold w-16 mr-13 border-b">zoh</div>
-          <div className=" font-bold w-16 mr-13">writers</div>
-          <div className="flex">
+        <div className="flex flex-col space-y-5 text-foreground mb-8 w-[1080px]">
+          <div>
+          <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
+            Director
+          </div>
+          <div className="flex gap-10">
+          {/* {movie.crew?.map((element, index) => (
+                <div>
+                  {element.name}
+                </div>
+              ))} */}
+          </div>
+          </div>
+          <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
+            writers
+          </div>
+          <div className="flex border-b w-full pb-3">
             <div className=" font-bold w-16 mr-13 flex">Stars</div>
             <div className="flex gap-10">
               {movie.cast?.slice(0, 5)?.map((element, index) => (
@@ -104,13 +136,40 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <h3 className="text-foreground text-2xl font-semibold">
-            More like this
-          </h3>
-          <h3 className="cursor-pointer">see more</h3>
+        <div>
+          <div className="flex justify-between ">
+            <h3 className="text-foreground text-2xl font-semibold">
+              More like this
+            </h3>
+            <h3 className="cursor-pointer">see more</h3>
+          </div>
+          <div className="flex gap-6 flex-wrap w-[1080px] mt-6 ">
+            {similarMovie.results?.slice(0, 5)?.map((element, index) => (
+              <Link
+                href={`/details/${element.id}`}
+                // ID={id}
+                key={index}
+                className=" w-[196.8px] rounded-lg overflow-hidden cursor-pointer"
+              >
+                <img
+                  className=" h-[300px] object-cover"
+                  src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
+                />
+                <div className="h-[90px] bg-gray-200 p-2 text-extrabold">
+                  <p className="flex text-foreground text-sm items-center gap-x-1">
+                    <Star /> {element.vote_average.toFixed(1)}
+                    <span className="text-muted-foreground text-xs">/10</span>
+                  </p>
+                  <p className="h-14 overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
+                    {element.title}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -15,9 +15,9 @@ export default function Home() {
       <div className="w-full flex flex-col justify-center items-center">
         <Header />
         <NowPlaying />
-        <Coming setClick={setClick} click={click}/>
-        <Popular setClick={setClick}/>
-        <Top setClick={setClick}/>
+        <Coming />
+        <Popular/>
+        <Top/>
         <Footer />
       </div>
     </>
