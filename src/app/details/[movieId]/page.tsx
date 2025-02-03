@@ -91,13 +91,15 @@ export default function Home() {
         </div>
         <div className="text-base">{clickedMovie.overview}</div>
         <div className="flex flex-col space-y-5 text-foreground mb-8">
-          <div className=" font-bold w-16 mr-13">zoh</div>
+          <div className=" font-bold w-16 mr-13 border-b">zoh</div>
           <div className=" font-bold w-16 mr-13">writers</div>
-          <div className=" font-bold w-16 mr-13 flex">
-            <div>Stars</div>
+          <div className="flex">
+            <div className=" font-bold w-16 mr-13 flex">Stars</div>
             <div className="flex gap-10">
-              {movie.cast.slice(0, 5)?.map((element, index) => (
-                <p key={index}>{element.name}</p>
+              {movie.cast?.slice(0, 5)?.map((element, index) => (
+                <ul className="flex items-center" key={index}>
+                  {element.name}
+                </ul>
               ))}
             </div>
           </div>
