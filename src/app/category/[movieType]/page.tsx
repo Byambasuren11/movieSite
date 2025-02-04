@@ -1,9 +1,8 @@
-
-'use client'
+"use client";
 import Header from "@/components/Header";
 import Star from "@/components/Star";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Movie = {
@@ -12,31 +11,56 @@ type Movie = {
   title: string;
   backdrop_path: string;
   id: number;
-  poster_path:string;
+  poster_path: string;
 };
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
-export default function Home () {
-      const { movieType } = useParams();
-      const [movie, setMovie] = useState<Movie[]>([]);
-      const getPopular = async () => {
-        try {
-          const response = await fetch(
-            `https://api.themoviedb.org/3/movie/${movieType}?language=en-US&page=1&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
-          );
-          const result = await response.json();
-          setMovie(result.results);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      console.log(movie)
-    useEffect(() => {
-        getPopular();
-      }, []);
-    return(<>
-    <div className="w-full flex flex-col justify-center items-center">
-    <Header/>
-    <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
+export default function Home() {
+  const { movieType } = useParams();
+  const [movie, setMovie] = useState<Movie[]>([]);
+  const getPopular = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieType}?language=en-US&page=1&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
+      );
+      const result = await response.json();
+      setMovie(result.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(movie);
+  useEffect(() => {
+    getPopular();
+  }, []);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
+
+  const onClick = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set("page", (Number(page) + 1).toString());
+    params.set("genres", 'dsa');
+
+    router.push(`/?${params.toString()}`);
+  };
+  console.log(page);
+  return (
+    <>
+      <div className="w-full flex flex-col justify-center items-center">
+        <Header />
+          <div className="w-[1280px] text-foreground text-2xl font-semibold  mt-1 mb-4">{movieType}</div>
+        <div className="flex gap-6 flex-wrap w-[1280px]">
           {movie.map((element, index) => (
             <Link
               href={`/details/${element.id}`}
@@ -59,7 +83,30 @@ export default function Home () {
               </div>
             </Link>
           ))}
+          <Pagination className="w-full flex justify-end mb-20">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">1</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">2</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">3</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
-        </div>
-    </>)
+      </div>
+    </>
+  );
 }

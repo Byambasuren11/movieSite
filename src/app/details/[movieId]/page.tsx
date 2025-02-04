@@ -14,7 +14,7 @@ type Movie = {
   release_date: string;
   backdrop_path: string;
   id: number;
-  poster_path:string;
+  poster_path: string;
 };
 
 export default function Home() {
@@ -47,7 +47,6 @@ export default function Home() {
       console.log(error);
     }
   };
-  console.log("dsdsad", clickedMovie);
   const getSimilarMovie = async () => {
     try {
       const response = await fetch(
@@ -60,13 +59,11 @@ export default function Home() {
       console.log(error);
     }
   };
-  console.log("similar", similarMovie);
   useEffect(() => {
     getClickedMovie();
     getDirector();
     getSimilarMovie();
   }, []);
-  console.log("dcd", movie);
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <Header />
@@ -111,16 +108,16 @@ export default function Home() {
         <div className="text-base">{clickedMovie.overview}</div>
         <div className="flex flex-col space-y-5 text-foreground mb-8 w-[1080px]">
           <div>
-          <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
-            Director
-          </div>
-          <div className="flex gap-10">
-          {/* {movie.crew?.map((element, index) => (
+            <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
+              Director
+            </div>
+            <div className="flex gap-10">
+              {/* {movie.crew?.map((element, index) => (
                 <div>
                   {element.name}
                 </div>
               ))} */}
-          </div>
+            </div>
           </div>
           <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
             writers
