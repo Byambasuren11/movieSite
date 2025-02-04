@@ -29,7 +29,7 @@ export default function Home() {
   const getPopular = async () => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieType}?language=en-US&page=1&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
+        `https://api.themoviedb.org/3/movie/${movieType}?language=en-US&page=${page}&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
       );
       const result = await response.json();
       setMovie(result.results);
@@ -101,7 +101,7 @@ export default function Home() {
                 <PaginationEllipsis />
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext href="" onClick={onClick} />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
