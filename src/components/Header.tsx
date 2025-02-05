@@ -17,10 +17,14 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Header = () => {
   const { setTheme, theme } = useTheme();
-  console.log("theme", theme);
+   const router = useRouter();
+    const searchParams = useSearchParams();
+    const genre = searchParams.get("genre") || "1";
+
   const onClick = () => {
     if (theme === "dark") {
       setTheme("light");
@@ -32,11 +36,10 @@ const Header = () => {
   const getClickedGenres = async () => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
+        `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
       );
       const result = await response.json();
-      console.log(result);
-      setClickedGenre(result);
+      setClickedGenre(result.genres);
     } catch (error) {
       console.log(error);
     }
@@ -44,34 +47,20 @@ const Header = () => {
   useEffect(()=>{
     getClickedGenres();
 },[])
-  const genres = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "History",
-    "Horror",
-    "Music",
-    "Mystery",
-    "Romance",
-    "Science",
-    "Fiction",
-    "TV Movie",
-    "Thriller",
-    "War",
-    "Western",
-  ];
+console.log(clickedGenre)
+const onClick1 = (id) => {
+  const params = new URLSearchParams(searchParams.toString());
+
+  params.set("genre",id);
+  console.log(params.toString());
+  router.push(`/genres?${params.toString()}`);
+};
   return (
     <div className="flex w-[1280px] h-[60px] justify-between items-center shrink-0">
-      <div className="flex text-indigo-700 italic font-bold gap-2">
+      <Link className="flex text-indigo-700 italic font-bold gap-2" href={"/"}>
         <MovieLogo />
         <p>Movie Z</p>
-      </div>
+      </Link>
       <div className="flex gap-4">
         <NavigationMenu>
           <NavigationMenuList>
@@ -82,18 +71,17 @@ const Header = () => {
                 <h3 className="text-foreground text-2xl font-semibold">Genres</h3>
                 <div className="text-extrabold">See lists of movies by genre</div>
                   </div>
-                <Link className="flex w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] flex-wrap cursor-pointer" href={""}>
-                  {genres.map((element, index) => (
-                    <>
-                    <div
+                <div className="flex w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] flex-wrap cursor-pointer">
+                  {clickedGenre?.map((element, index) => (
+                    <Link
                       className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
                       key={index}
-                    >
-                      {element}
+                      onClick={() => onClick1(element.id)} href={"/genres"}                    >
+                      {element.name}
                       <ChevronRight className="w-3" />
-                    </div></>
+                    </Link>
                   ))}
-                </Link>
+                </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>

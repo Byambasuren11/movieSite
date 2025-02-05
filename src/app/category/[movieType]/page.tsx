@@ -1,5 +1,6 @@
 "use client";
 import Header from "@/components/Header";
+import Paginations from "@/components/Pagination";
 import Star from "@/components/Star";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -13,19 +14,14 @@ type Movie = {
   id: number;
   poster_path: string;
 };
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 
 export default function Home() {
   const { movieType } = useParams();
   const [movie, setMovie] = useState<Movie[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") || "1";
+
   const getPopular = async () => {
     try {
       const response = await fetch(
@@ -37,31 +33,28 @@ export default function Home() {
       console.log(error);
     }
   };
-  console.log(movie);
+
   useEffect(() => {
     getPopular();
-  }, []);
-  const router = useRouter();
-
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page");
+  }, [searchParams]);
 
   const onClick = () => {
     const params = new URLSearchParams(searchParams.toString());
 
     params.set("page", (Number(page) + 1).toString());
-    params.set("genres", 'dsa');
-
-    router.push(`/?${params.toString()}`);
+    console.log(params.toString());
+    router.push(`/category/${movieType}?${params.toString()}`);
   };
-  console.log(page);
+
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center">
         <Header />
-          <div className="w-[1280px] text-foreground text-2xl font-semibold  mt-1 mb-4">{movieType}</div>
+        <div className="w-[1280px] text-foreground text-2xl font-semibold  mt-1 mb-4">
+          {movieType}
+        </div>
         <div className="flex gap-6 flex-wrap w-[1280px]">
-          {movie.map((element, index) => (
+          {movie?.map((element, index) => (
             <Link
               href={`/details/${element.id}`}
               // ID={id}
@@ -83,29 +76,9 @@ export default function Home() {
               </div>
             </Link>
           ))}
-          <Pagination className="w-full flex justify-end mb-20">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="" onClick={onClick} />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <Paginations onClick={onClick} page={page}/>
         </div>
+        {/* <button onClick={onClick}>click</button> */}
       </div>
     </>
   );
