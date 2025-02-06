@@ -1,3 +1,4 @@
+"use client"
 import Light from "@/components/Light";
 import MovieLogo from "@/components/Movie-Logo";
 import { Button } from "@/components/ui/button";
@@ -50,8 +51,8 @@ const Header = () => {
 console.log(clickedGenre)
 const onClick1 = (id) => {
   const params = new URLSearchParams(searchParams.toString());
-
-  params.set("genre",id);
+ id.push(id);
+  params.set("genre",id.join(","));
   console.log(params.toString());
   router.push(`/genres?${params.toString()}`);
 };
