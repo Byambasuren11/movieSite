@@ -41,7 +41,7 @@ const Genres = () => {
     const params = new URLSearchParams(searchParams.toString());
     ids.push(id);
     if(ids?.includes(id)){
-      console.log("hd",ids)
+      
     }
     params.set("genres", ids?.join(","));
     console.log(params.toString());
