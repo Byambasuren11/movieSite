@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Light from "@/components/Light";
 import MovieLogo from "@/components/Movie-Logo";
 import { Button } from "@/components/ui/button";
@@ -22,9 +22,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const Header = () => {
   const { setTheme, theme } = useTheme();
-   const router = useRouter();
-    const searchParams = useSearchParams();
-    const genre = searchParams.get("genre") || "1";
+  const [search, setSearch] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const genre = searchParams.get("genre") || "1";
 
   const onClick = () => {
     if (theme === "dark") {
@@ -33,29 +34,40 @@ const Header = () => {
       setTheme("dark");
     }
   };
-  const [clickedGenre, setClickedGenre]=useState()
+  const [clickedGenre, setClickedGenre] = useState();
+  const [searchResult, setSearchResult] = useState();
   const getClickedGenres = async () => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
       );
+      const search1 = await fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${search}&language=en-US&page=1&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
+      );
+      const resultSearch = await search1.json();
       const result = await response.json();
+      setSearchResult(resultSearch);
       setClickedGenre(result.genres);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(()=>{
+  console.log("gfgf", searchResult);
+  useEffect(() => {
     getClickedGenres();
-},[])
-console.log(clickedGenre)
-const onClick1 = (id) => {
-  const params = new URLSearchParams(searchParams.toString());
- id.push(id);
-  params.set("genre",id.join(","));
-  console.log(params.toString());
-  router.push(`/genres?${params.toString()}`);
-};
+  }, [search]);
+  // console.log(clickedGenre);
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
+  console.log("onChange", search);
+  const onClick1 = (id) => {
+    const params = new URLSearchParams(searchParams.toString());
+    id.push(id);
+    params.set("genre", id.join(","));
+    console.log(params.toString());
+    router.push(`/genres?${params.toString()}`);
+  };
   return (
     <div className="flex w-[1280px] h-[60px] justify-between items-center shrink-0">
       <Link className="flex text-indigo-700 italic font-bold gap-2" href={"/"}>
@@ -66,18 +78,26 @@ const onClick1 = (id) => {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="border-2">genre</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="border-2">
+                genre
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
-                  <div className="border-b border-3 flex flex-col gap-3 p-3">
-                <h3 className="text-foreground text-2xl font-semibold">Genres</h3>
-                <div className="text-extrabold">See lists of movies by genre</div>
+                <div className="border-b border-3 flex flex-col gap-3 p-3">
+                  <h3 className="text-foreground text-2xl font-semibold">
+                    Genres
+                  </h3>
+                  <div className="text-extrabold">
+                    See lists of movies by genre
                   </div>
+                </div>
                 <div className="flex w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] flex-wrap cursor-pointer">
                   {clickedGenre?.map((element, index) => (
                     <Link
                       className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
                       key={index}
-                      onClick={() => onClick1(element.id)} href={"/genres"}                    >
+                      onClick={() => onClick1(element.id)}
+                      href={"/genres"}
+                    >
                       {element.name}
                       <ChevronRight className="w-3" />
                     </Link>
@@ -91,7 +111,25 @@ const onClick1 = (id) => {
           type="text"
           className="flex h-9 w-[200px] rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-[38px]"
           placeholder="Search..."
+          onChange={onChange}
         />
+        <div>
+          <Button
+            variant="primary"
+            size="icon"
+            onClick={() => router.push(`/search?q=${search}`)}
+          >
+            <NavigationMenuIndicator>
+              <NavigationMenuLink>
+                <NavigationMenu asChild>
+                  <ChevronRight className="w-3" />
+                </NavigationMenu>
+              </NavigationMenuLink>
+            </NavigationMenuIndicator>
+          </Button>
+
+          <Light />
+        </div>
       </div>
       <div>
         <Button variant="outline" size="icon" onClick={onClick}>
