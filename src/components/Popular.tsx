@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Star from "./Star";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 type Movie = {
   vote_average: number;
@@ -34,7 +35,7 @@ const Popular = () => {
       <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Popular</h3>
-          <Link href={`/category/popular`}><h3 className="cursor-pointer">see more</h3></Link>
+          <Link href={`/category/popular`}><h3 className="cursor-pointer flex">see more <ArrowRight/></h3></Link>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
           {popular.slice(0, 10).map((element, index) => (

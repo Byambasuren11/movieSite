@@ -1,10 +1,7 @@
 "use client";
-import Light from "@/components/Light";
 import MovieLogo from "@/components/Movie-Logo";
 import { Button } from "@/components/ui/button";
-// import { SelectTrigger } from "@radix-ui/react-select";
-import { Select, SelectTrigger } from "@/components/ui/select";
-import { Sun, Moon, Navigation, ChevronRight } from "lucide-react";
+import { Sun, Moon, Search, ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   NavigationMenu,
@@ -19,6 +16,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Star from "./Star";
 
 const Header = () => {
   const { setTheme, theme } = useTheme();
@@ -46,7 +44,7 @@ const Header = () => {
       );
       const resultSearch = await search1.json();
       const result = await response.json();
-      setSearchResult(resultSearch);
+      setSearchResult(resultSearch.results);
       setClickedGenre(result.genres);
     } catch (error) {
       console.log(error);
@@ -99,7 +97,6 @@ const Header = () => {
                       href={"/genres"}
                     >
                       {element.name}
-                      <ChevronRight className="w-3" />
                     </Link>
                   ))}
                 </div>
@@ -107,28 +104,44 @@ const Header = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <input
-          type="text"
-          className="flex h-9 w-[200px] rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-[38px]"
-          placeholder="Search..."
-          onChange={onChange}
-        />
-        <div>
-          <Button
-            variant="primary"
-            size="icon"
-            onClick={() => router.push(`/search?q=${search}`)}
-          >
-            <NavigationMenuIndicator>
-              <NavigationMenuLink>
-                <NavigationMenu asChild>
-                  <ChevronRight className="w-3" />
-                </NavigationMenu>
-              </NavigationMenuLink>
-            </NavigationMenuIndicator>
-          </Button>
-
-          <Light />
+        <div className="">
+          <div className="absolute text-gray-500 top-4">
+          <Search/>
+          </div>
+          <input
+            type="text"
+            className="flex h-9 w-[500px] rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-[38px] relative"
+            placeholder="Search..."
+            onChange={onChange}
+          />
+          <div className="absolute z-10 w-[500px] h-fit bg-white border rounded-xl mt-4">
+            {searchResult?.slice(0, 5).map((element, index) => (
+              <div className="flex m-4 gap-4 border-b">
+                <img
+                  className="w-1/6 h-1/6 rounded-sm"
+                  src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
+                />
+                <div className="w-full  flex flex-col gap-4">
+                  <div>
+                  <p className="overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
+                    {element.title}
+                  </p>
+                  <p className="flex text-foreground text-sm items-center gap-x-1">
+                    <Star /> {element.vote_average}
+                    <span className="text-muted-foreground text-xs">/10</span>
+                  </p>
+                  </div>
+                  <Link href={`/details/${element.id}`}>
+                    <h3 className="cursor-pointer flex justify-end mr-8">
+                      see more
+                      <ArrowRight/>
+                    </h3>
+                  </Link>
+                </div>
+              </div>
+            ))}
+           <Link className="px-4 py-2.5 text-sm font-medium text-foreground" href="/search">See all results for "{search}"</Link>
+          </div>
         </div>
       </div>
       <div>

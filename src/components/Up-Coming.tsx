@@ -2,6 +2,7 @@ import { useParams } from "next/navigation";
 import Star from "./Star";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 type Movie = {
   vote_average: number;
@@ -36,7 +37,7 @@ export const Coming = () => {
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
           <Link href={`/category/upcoming`}>
-            <h3 className="cursor-pointer">see more</h3>
+            <h3 className="cursor-pointer flex">see more <ArrowRight/></h3>
           </Link>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">

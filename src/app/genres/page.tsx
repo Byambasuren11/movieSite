@@ -13,7 +13,7 @@ const Genres = () => {
   const [genreMovie, setGenreMovie] = useState();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const ids = searchParams.get("genres") ? searchParams.get("genres")?.split(',') : "[]"
+  const ids = searchParams.get("genres") ? searchParams.get("genres")?.split(",") : []
   const page = (searchParams.get("page") || "1");
   const getClickedGenres = async () => {
     try {
@@ -40,9 +40,6 @@ const Genres = () => {
   const onClick1 = (id) => {
     const params = new URLSearchParams(searchParams.toString());
     ids.push(id);
-    if(ids?.includes(id)){
-      
-    }
     params.set("genres", ids?.join(","));
     console.log(params.toString());
     router.push(`?${params.toString()}`);
