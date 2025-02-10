@@ -1,7 +1,7 @@
 "use client";
 import MovieLogo from "@/components/Movie-Logo";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Search, ArrowRight } from "lucide-react";
+import { Sun, Moon, Search, ArrowRight, MoveRight, ChevronRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   NavigationMenu,
@@ -17,6 +17,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Star from "./Star";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const Header = () => {
   const { setTheme, theme } = useTheme();
@@ -24,6 +30,7 @@ const Header = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const genre = searchParams.get("genre") || "1";
+  const [se, setSe]=useState(false)
 
   const onClick = () => {
     if (theme === "dark") {
@@ -32,6 +39,7 @@ const Header = () => {
       setTheme("dark");
     }
   };
+
   const [clickedGenre, setClickedGenre] = useState();
   const [searchResult, setSearchResult] = useState();
   const getClickedGenres = async () => {
@@ -50,20 +58,18 @@ const Header = () => {
       console.log(error);
     }
   };
-  console.log("gfgf", searchResult);
   useEffect(() => {
     getClickedGenres();
   }, [search]);
-  // console.log(clickedGenre);
   const onChange = (e) => {
     setSearch(e.target.value);
+    setSe(true);
   };
-  console.log("onChange", search);
+  setSe(false);
   const onClick1 = (id) => {
     const params = new URLSearchParams(searchParams.toString());
     id.push(id);
     params.set("genre", id.join(","));
-    console.log(params.toString());
     router.push(`/genres?${params.toString()}`);
   };
   return (
@@ -94,9 +100,10 @@ const Header = () => {
                       className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
                       key={index}
                       onClick={() => onClick1(element.id)}
-                      href={"/genres"}
+                      href={"/genres/id"}
                     >
                       {element.name}
+                      <ChevronRight className="w-3" />
                     </Link>
                   ))}
                 </div>
@@ -106,7 +113,7 @@ const Header = () => {
         </NavigationMenu>
         <div className="">
           <div className="absolute text-gray-500 top-4">
-          <Search/>
+            <Search />
           </div>
           <input
             type="text"
@@ -114,7 +121,7 @@ const Header = () => {
             placeholder="Search..."
             onChange={onChange}
           />
-          <div className="absolute z-10 w-[500px] h-fit bg-white border rounded-xl mt-4">
+          <div className="absolute z-10 w-[500px] h-fit bg-white dark:bg-black border rounded-xl mt-4">
             {searchResult?.slice(0, 5).map((element, index) => (
               <div className="flex m-4 gap-4 border-b">
                 <img
@@ -123,32 +130,45 @@ const Header = () => {
                 />
                 <div className="w-full  flex flex-col gap-4">
                   <div>
-                  <p className="overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
-                    {element.title}
-                  </p>
-                  <p className="flex text-foreground text-sm items-center gap-x-1">
-                    <Star /> {element.vote_average}
-                    <span className="text-muted-foreground text-xs">/10</span>
-                  </p>
+                    <p className="overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
+                      {element.title}
+                    </p>
+                    <p className="flex text-foreground text-sm items-center gap-x-1">
+                      <Star /> {element.vote_average.toFixed(1)}
+                      <span className="text-muted-foreground text-xs">/10</span>
+                    </p>
                   </div>
                   <Link href={`/details/${element.id}`}>
                     <h3 className="cursor-pointer flex justify-end mr-8">
                       see more
-                      <ArrowRight/>
+                      <ArrowRight className="w-4" />
                     </h3>
                   </Link>
                 </div>
               </div>
             ))}
-           <Link className="px-4 py-2.5 text-sm font-medium text-foreground" href="/search">See all results for "{search}"</Link>
+            {
+              se?(<Link
+                className="px-4 py-2.5 text-sm font-medium text-foreground "
+                href="/search"
+              >
+                See all results for "{search}"
+              </Link>):(<></>)
+            }
+            
           </div>
         </div>
       </div>
       <div>
+      <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" onClick={onClick}>
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
         </Button>
+      </DropdownMenuTrigger>
+    </DropdownMenu>
       </div>
     </div>
   );

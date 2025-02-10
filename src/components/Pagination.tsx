@@ -22,7 +22,7 @@ const Paginations = (props: { onClick: any; page:string}) => {
             <PaginationLink >{Number(page)-1}</PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink className="bg-gray-100" >{Number(page)}</PaginationLink>
+            <PaginationLink className="bg-gray-100 dark:bg-gray-800" >{Number(page)}</PaginationLink>
           </PaginationItem>
           <PaginationItem>
             <PaginationLink >{Number(page)+1}</PaginationLink>

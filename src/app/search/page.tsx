@@ -43,7 +43,6 @@ const Genres = () => {
     const params = new URLSearchParams(searchParams.toString());
     ids.push(id);
     params.set("genres", ids?.join(","));
-    console.log(params.toString());
     router.push(`?${params.toString()}`);
   };
 
@@ -51,7 +50,6 @@ const Genres = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", (Number(page) + 1).toString());
     router.push(`?${params.toString()}`);
-    console.log(params.toString());
   };
   console.log("clic", genreMovie);
   useEffect(() => {
@@ -74,7 +72,7 @@ const Genres = () => {
                   className=" h-[230px] w-full object-cover"
                   src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
                 />
-                <div className="h-[96px] bg-gray-200 p-2 text-extrabold">
+                <div className="h-[96px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">
                   <p className="flex text-foreground text-sm items-center gap-x-1">
                     <Star /> {element.vote_average.toFixed(1)}
                     <span className="text-muted-foreground text-xs">/10</span>

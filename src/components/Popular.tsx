@@ -35,7 +35,7 @@ const Popular = () => {
       <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Popular</h3>
-          <Link href={`/category/popular`}><h3 className="cursor-pointer flex">see more <ArrowRight/></h3></Link>
+          <Link href={`/category/popular`}><h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3></Link>
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
           {popular.slice(0, 10).map((element, index) => (
@@ -48,9 +48,9 @@ const Popular = () => {
                 className=" h-[340px] w-full object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
-              <div className="h-[96px] bg-gray-200 p-2 text-extrabold">
+              <div className="h-[96px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">
                 <p className="flex text-foreground text-sm items-center gap-x-1">
-                  <Star /> {element.vote_average}
+                  <Star /> {element.vote_average.toFixed(1)}
                   <span className="text-muted-foreground text-xs">/10</span>
                 </p>
                 <p className="h-14 overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">

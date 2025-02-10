@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { ArrowRight, PlayIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DialogHeader } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
+import ReactPlayer from "react-player";
 
 type Movie = {
   vote_average: number;
@@ -23,6 +28,7 @@ export default function Home() {
   const [clickedMovie, setClickedMovie] = useState<Movie>({} as Movie);
   const [movie, setMovie] = useState<Movie>({} as Movie);
   const [similarMovie, setSimilarMovie] = useState<Movie>({} as Movie);
+  const [video,setVideo]=useState();
   const getClickedMovie = async () => {
     try {
       const response = await fetch(
@@ -35,6 +41,7 @@ export default function Home() {
       console.log(error);
     }
   };
+  console.log(clickedMovie)
   const getDirector = async () => {
     try {
       const response = await fetch(
@@ -43,6 +50,16 @@ export default function Home() {
       const result = await response.json();
       console.log(result);
       setMovie(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getVideo = async (id) => {
+    try {
+        const video=await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`)
+        const result1=await video.json();
+        setVideo(result1.results[0])
+      
     } catch (error) {
       console.log(error);
     }
@@ -81,18 +98,33 @@ export default function Home() {
           </p>
         </div>
         <div className="flex justify-between ">
-          <div className="w-[280px] h-[428px] bg-black rounded-sm overflow-hidden">
+          <div className="w-[280px] h-[428px]rounded-sm overflow-hidden">
             <img
               className="h-[428px] object-cover"
               src={`https://image.tmdb.org/t/p/original${clickedMovie.poster_path}`}
             />
           </div>
-          <div className="w-[760px] h-[428px] bg-black">
-            {" "}
+          <div className="w-[760px] h-[428px] bg-black relative">
             <img
               className="h-[428px] object-cover"
               src={`https://image.tmdb.org/t/p/original${clickedMovie.backdrop_path}`}
             />
+            <div className="absolute bottom-4 left-4 z-10">
+            <Dialog >
+                <DialogTrigger >
+              <Button  onClick={()=>getVideo(clickedMovie.id)} className=" rounded-full"><PlayIcon/></Button>
+                </DialogTrigger>
+                <DialogContent className="w-fit max-w-4xl">
+                  <DialogHeader >
+                    <DialogTitle></DialogTitle>
+                    <DialogDescription>
+                    </DialogDescription>
+                    <ReactPlayer url={`https://www.youtube.com/watch?v=${video?.key}` }/>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+            </div>
           </div>
         </div>
         <div className="flex gap-2">
@@ -138,7 +170,7 @@ export default function Home() {
             <h3 className="text-foreground text-2xl font-semibold">
               More like this
             </h3>
-            <h3 className="cursor-pointer">see more</h3>
+            <Link className="cursor-pointer flex" href={"/category/similar"}>see more <ArrowRight className="w-4"/></Link>
           </div>
           <div className="flex gap-6 flex-wrap w-[1080px] mt-6 ">
             {similarMovie.results?.slice(0, 5)?.map((element, index) => (
@@ -152,7 +184,7 @@ export default function Home() {
                   className=" h-[300px] object-cover"
                   src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
                 />
-                <div className="h-[90px] bg-gray-200 p-2 text-extrabold">
+                <div className="h-[90px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">
                   <p className="flex text-foreground text-sm items-center gap-x-1">
                     <Star /> {element.vote_average.toFixed(1)}
                     <span className="text-muted-foreground text-xs">/10</span>

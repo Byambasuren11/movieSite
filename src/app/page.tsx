@@ -8,11 +8,9 @@ import { Coming } from "@/components/Up-Coming";
 import { useState } from "react";
 
 export default function Home() {
-
   return (
     <>
-      <div className="w-full flex flex-col justify-center items-center">
-
+      <div className="w-full flex flex-col justify-center items-center bg-white dark:bg-black">
         <Header />
         <NowPlaying />
         <Coming />
