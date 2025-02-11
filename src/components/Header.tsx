@@ -65,7 +65,7 @@ const Header = () => {
     setSearch(e.target.value);
     setSe(true);
   };
-  setSe(false);
+  // setSe(false);
   const onClick1 = (id) => {
     const params = new URLSearchParams(searchParams.toString());
     id.push(id);
@@ -73,7 +73,7 @@ const Header = () => {
     router.push(`/genres?${params.toString()}`);
   };
   return (
-    <div className="flex w-[1280px] h-[60px] justify-between items-center shrink-0">
+    <div className="flex w-2/3 h-[60px] justify-between items-center shrink-0">
       <Link className="flex text-indigo-700 italic font-bold gap-2" href={"/"}>
         <MovieLogo />
         <p>Movie Z</p>
@@ -113,7 +113,7 @@ const Header = () => {
         </NavigationMenu>
         <div className="">
           <div className="absolute text-gray-500 top-4">
-            <Search />
+            <Search size={16}/>
           </div>
           <input
             type="text"

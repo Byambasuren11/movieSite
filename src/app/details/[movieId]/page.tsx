@@ -84,7 +84,7 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <Header />
-      <div className="w-[1080px] mt-20 flex flex-col gap-5">
+      <div className="w-2/3 mt-20 flex flex-col gap-5">
         <div className="flex w-full justify-between">
           <div>
             <div className="break-words text-2xl font-bold w-52 lg:w-fit lg:text-4xl">
@@ -115,7 +115,7 @@ export default function Home() {
               <Button  onClick={()=>getVideo(clickedMovie.id)} className=" rounded-full"><PlayIcon/></Button>
                 </DialogTrigger>
                 <DialogContent className="w-fit max-w-4xl">
-                  <DialogHeader >
+                  <DialogHeader>
                     <DialogTitle></DialogTitle>
                     <DialogDescription>
                     </DialogDescription>

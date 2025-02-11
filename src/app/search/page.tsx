@@ -5,7 +5,6 @@ import Star from "@/components/Star";
 import { ChevronRight, SearchCode } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import page from "../details/page";
 import Link from "next/link";
 
 const Genres = () => {
@@ -46,9 +45,9 @@ const Genres = () => {
     router.push(`?${params.toString()}`);
   };
 
-  const onClick = () => {
+  const onClick = (page) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", (Number(page) + 1).toString());
+    params.set("page", (Number(page)).toString());
     router.push(`?${params.toString()}`);
   };
   console.log("clic", genreMovie);
@@ -60,7 +59,7 @@ const Genres = () => {
     <>
       <div className=" flex items-center flex-col">
         <Header />
-        <div className="flex justify-between w-[1300px] mt-20">
+        <div className="flex justify-between w-2/3 mt-20">
           <div className="flex gap-6 flex-wrap w-[800px]">
             {genreMovie?.map((element, index) => (
               <Link

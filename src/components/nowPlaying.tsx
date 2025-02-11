@@ -19,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ReactPlayer from 'react-player/youtube'
+import Autoplay from "embla-carousel-autoplay";
 
 type Movie = {
   id: any;
@@ -59,8 +60,14 @@ const NowPlaying = () => {
   useEffect(() => {
     getPicture();
   }, []);
+ 
+
   return (
-    <Carousel>
+    <Carousel
+    plugins={[Autoplay({ delay: 3000 })]}
+    opts={{
+      loop: true,
+    }}>
       <CarouselContent className="w-full h-[600px] mt-5">
         {movies.slice(0, 10).map((element, index) => (
           <CarouselItem key={index} className="relative">

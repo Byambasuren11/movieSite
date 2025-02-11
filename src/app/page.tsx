@@ -8,6 +8,7 @@ import { Coming } from "@/components/Up-Coming";
 import { useState } from "react";
 
 export default function Home() {
+  const category=[{name:"upcoming" ,label:"Upcoming"},{name:"popular" ,label:"Popular"},{name:"top_rated" ,label:"Top Rated"}]
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center bg-white dark:bg-black">

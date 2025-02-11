@@ -50,7 +50,7 @@ export default function Home() {
     <>
       <div className="w-full flex flex-col justify-center items-center">
         <Header />
-        <div className="w-[1280px] text-foreground text-2xl font-semibold  mt-1 mb-4">
+        <div className="w-2/3 text-foreground text-2xl font-semibold  mt-1 mb-4">
           {movieType}
         </div>
         <div className="flex gap-6 flex-wrap w-[1280px]">
@@ -78,7 +78,6 @@ export default function Home() {
           ))}
           <Paginations onClick={onClick} page={page}/>
         </div>
-        {/* <button onClick={onClick}>click</button> */}
       </div>
     </>
   );
