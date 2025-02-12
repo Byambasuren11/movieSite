@@ -42,7 +42,6 @@ export default function Home() {
     const params = new URLSearchParams(searchParams.toString());
 
     params.set("page", (Number(page) + 1).toString());
-    console.log(params.toString());
     router.push(`/category/${movieType}?${params.toString()}`);
   };
 

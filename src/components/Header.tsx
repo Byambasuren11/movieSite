@@ -45,7 +45,7 @@ const Header = () => {
   };
   return (
     <>
-    <div className="flex w-2/3 h-[60px] justify-between items-center shrink-0 sm:w-full">
+      <div className="flex w-full h-[60px] justify-between items-center shrink-0 xl:w-2/3">
         <Link
           className="flex text-indigo-700 italic font-bold gap-2"
           href={"/"}
@@ -55,13 +55,12 @@ const Header = () => {
         </Link>
         <div className="flex gap-4 ">
           <Genre />
-          <div className=" w-2/3 ">
-            <div className="absolute text-gray-500 top-4">
-              <Search size={16} />
-            </div>
+          <div className=" flex h-9 gap-[10px] items-center border px-3 rounded-md ">
+            <Search size={16} />
+
             <input
               type="text"
-              className="h-9 focus-visible:ring-0 border-0 outline-none rounded-none sm:block"
+              className="h-7 focus-visible:ring-0 border-0 outline-none rounded-none hidden lg:block"
               placeholder="Search..."
               onChange={onChange}
             />
@@ -117,7 +116,6 @@ const Header = () => {
           </DropdownMenu>
         </div>
       </div>
-
     </>
   );
 };

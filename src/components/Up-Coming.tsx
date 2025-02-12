@@ -31,7 +31,7 @@ export const Coming = () => {
   }, []);
   return (
     <>
-      <div className="page-primary py-8 w-2/3 lg:py-13 space-y-8 lg:space-y-13">
+      <div className="page-primary py-8 w-full lg:py-13 space-y-8 lg:space-y-13 xl:w-2/3">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
           <Link href={`/category/upcoming`}>
@@ -44,10 +44,10 @@ export const Coming = () => {
               href={`/details/${element.id}`}
               // ID={id}
               key={index}
-              className=" w-1/5 rounded-lg overflow-hidden cursor-pointer"
+              className=" w-[236px] rounded-lg overflow-hidden cursor-pointer"
             >
               <img
-                className=" h-1/5 w-full object-cover"
+                className=" h-[340px] w-full object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">
