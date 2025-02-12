@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <>
       <div className="bg-indigo-700 py-10 px-5 text-sm text-[#fafafa] w-full h-40 mt-20">
-        <div className="w-[1250px] h-full p-10 flex justify-between">
+        <div className=" h-full p-10 flex justify-between">
           <div>
             <p>© 2024 Movie Z. All Rights Reserved.</p>
           </div>

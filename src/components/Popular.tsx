@@ -37,7 +37,7 @@ const Popular = () => {
           <h3 className="text-foreground text-2xl font-semibold">Popular</h3>
           <Link href={`/category/popular`}><h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3></Link>
         </div>
-        <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
+        <div className="flex gap-6 flex-wrap w-1/3 mt-6 ">
           {popular.slice(0, 10).map((element, index) => (
             <Link
               href={`/details/${element.id}`}

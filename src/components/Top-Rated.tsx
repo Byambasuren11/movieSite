@@ -32,12 +32,12 @@ const Top = () => {
   }, []);
   return (
     <>
-      <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
+      <div className="page-primary py-8 sm:flex-wrap">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Top</h3>
           <Link href={`/category/top_rated`}><h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3></Link>
         </div>
-        <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
+        <div className="flex gap-6 flex-wrap w-1/3 mt-6 ">
           {top.slice(0, 10).map((element, index) => (
              <Link
              href={`/details/${element.id}`}

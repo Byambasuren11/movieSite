@@ -31,23 +31,23 @@ export const Coming = () => {
   }, []);
   return (
     <>
-      <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
+      <div className="page-primary py-8 w-2/3 lg:py-13 space-y-8 lg:space-y-13">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
           <Link href={`/category/upcoming`}>
             <h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3>
           </Link>
         </div>
-        <div className="flex gap-6 flex-wrap w-[1280px] mt-6 ">
+        <div className="flex gap-6 flex-wrap mt-6 ">
           {coming.slice(0, 10).map((element, index) => (
             <Link
               href={`/details/${element.id}`}
               // ID={id}
               key={index}
-              className=" w-[236.5px] rounded-lg overflow-hidden cursor-pointer"
+              className=" w-1/5 rounded-lg overflow-hidden cursor-pointer"
             >
               <img
-                className=" h-[340px] w-full object-cover"
+                className=" h-1/5 w-full object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">

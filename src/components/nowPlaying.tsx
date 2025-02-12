@@ -28,10 +28,12 @@ type Movie = {
   original_title: string;
   backdrop_path: string;
 };
-
+type Video={
+  key:string;
+}
 const NowPlaying = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [video, setVideo]= useState()
+  const [video, setVideo]=useState<Video> ()
 
   const getPicture = async () => {
     try {
@@ -47,7 +49,7 @@ const NowPlaying = () => {
       console.log(error);
     }
   };
-  const getVideo = async (id) => {
+  const getVideo = async (id:number) => {
     try {
         const video=await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`)
         const result1=await video.json();
