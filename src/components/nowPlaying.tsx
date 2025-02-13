@@ -74,11 +74,11 @@ const NowPlaying = () => {
         {movies.slice(0, 10).map((element, index) => (
           <CarouselItem key={index} className="relative">
             <img
-              className="w-full h-full object-cover"
+              className="h-1/2 w-full xl:h-full object-cover"
               src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
               alt={element.original_title}
             />
-            <div className="flex flex-col w-[400px] h-[400px] absolute z-10 top-40 left-24 p-5 space-y-4 lg:p-0">
+            <div className="w-[400px] h-[400px] absolute left-10 top-180 mt-10 flex flex-col xl:z-10 xl:top-40 xl:left-80 xl:p-5 xl:space-y-4 xl:p-0">
               <p className=" w-52 text-2xl font-semibold truncate text-white">
                 {element.original_title}
               </p>
@@ -91,14 +91,14 @@ const NowPlaying = () => {
               </p>
               <Dialog >
                 <DialogTrigger >
-              <Button onClick={()=>getVideo(element.id)} className="w-fit w-max-[1200px]">watch Trailer</Button>
+              <Button onClick={()=>getVideo(element.id)}>watch Trailer</Button>
                 </DialogTrigger>
                 <DialogContent className="w-fit max-w-3xl">
                   <DialogHeader>
                     <DialogTitle></DialogTitle>
                     <DialogDescription>
                     </DialogDescription>
-                    <ReactPlayer className="w-fit w-[300px]" url={`https://www.youtube.com/watch?v=${video?.key}` }/>
+                    <ReactPlayer url={`https://www.youtube.com/watch?v=${video?.key}` }/>
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
@@ -106,8 +106,8 @@ const NowPlaying = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-10" />
-      <CarouselNext className="absolute right-10" />
+      <CarouselPrevious className="absolute top-40 left-10 xl:left-20 xl:top-80" />
+      <CarouselNext className="absolute top-40 right-10 xl:right-20 xl:top-80" />
     </Carousel>
   );
 };

@@ -53,67 +53,69 @@ const Header = () => {
           <MovieLogo />
           <p>Movie Z</p>
         </Link>
-        <div className="flex gap-4 ">
-          <Genre />
-          <div className=" flex h-9 gap-[10px] items-center border px-3 rounded-md ">
-            <Search size={16} />
+        <div className=" flex gap-3 w-2/3 justify-end xl:justify-between">
+          <div className="flex gap-4 ">
+            <Genre />
+            <div className=" flex h-10 gap-[10px] items-center border px-3 rounded-md relative">
+              <Search size={16} />
 
-            <input
-              type="text"
-              className="h-7 focus-visible:ring-0 border-0 outline-none rounded-none hidden lg:block"
-              placeholder="Search..."
-              onChange={onChange}
-            />
-            <div className="absolute z-10  h-fit bg-white dark:bg-black border rounded-xl mt-4">
-              {searchResult?.slice(0, 5).map((element, index) => (
-                <div className="flex m-4 gap-4 border-b">
-                  <img
-                    className="w-1/6 h-1/6 rounded-sm"
-                    src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
-                  />
-                  <div className="w-full  flex flex-col gap-4">
-                    <div>
-                      <p className="overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
-                        {element.title}
-                      </p>
-                      <p className="flex text-foreground text-sm items-center gap-x-1">
-                        <Star /> {element.vote_average.toFixed(1)}
-                        <span className="text-muted-foreground text-xs">
-                          /10
-                        </span>
-                      </p>
+              <input
+                type="text"
+                className="h-9 focus-visible:ring-0 border-0 outline-none rounded-none hidden xl:block"
+                placeholder="Search..."
+                onChange={onChange}
+              />
+              <div className="absolute z-10 h-fit bg-white dark:bg-black rounded-xl top-9 left-[-150px] w-[577px]">
+                {searchResult?.slice(0, 5).map((element, index) => (
+                  <div className="flex m-4 gap-4 border-b">
+                    <img
+                      className="w-[67px] h-[100px] rounded-sm"
+                      src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
+                    />
+                    <div className="w-full  flex flex-col gap-4">
+                      <div>
+                        <p className="overflow-hidden text-ellipsis line-clamp-2 text-lg text-foreground">
+                          {element.title}
+                        </p>
+                        <p className="flex text-foreground text-sm items-center gap-x-1">
+                          <Star /> {element.vote_average.toFixed(1)}
+                          <span className="text-muted-foreground text-xs">
+                            /10
+                          </span>
+                        </p>
+                      </div>
+                      <Link href={`/details/${element.id}`}>
+                        <h3 className="cursor-pointer flex justify-end mr-8">
+                          see more
+                          <ArrowRight className="w-4" />
+                        </h3>
+                      </Link>
                     </div>
-                    <Link href={`/details/${element.id}`}>
-                      <h3 className="cursor-pointer flex justify-end mr-8">
-                        see more
-                        <ArrowRight className="w-4" />
-                      </h3>
-                    </Link>
                   </div>
-                </div>
-              ))}
-              {se ? (
-                <Link
-                  className="px-4 py-2.5 text-sm font-medium text-foreground "
-                  href="/search"
-                >
-                  See all results for "{search}"
-                </Link>
-              ) : (
-                <></>
-              )}
+                ))}
+                {se ? (
+                  <Link
+                    className="px-4 py-2.5 text-sm font-medium text-foreground "
+                    href="/search"
+                  >
+                    See all results for "{search}"
+                  </Link>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" onClick={onClick}>
-                <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-            </DropdownMenuTrigger>
-          </DropdownMenu>
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon" onClick={onClick}>
+                  <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                </Button>
+              </DropdownMenuTrigger>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </>

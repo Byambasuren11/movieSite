@@ -38,16 +38,16 @@ export const Coming = () => {
             <h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3>
           </Link>
         </div>
-        <div className="flex gap-6 flex-wrap mt-6 ">
+        <div className="flex flex-wrap gap-5 lg:gap-8 ">
           {coming.slice(0, 10).map((element, index) => (
             <Link
               href={`/details/${element.id}`}
               // ID={id}
               key={index}
-              className=" w-[236px] rounded-lg overflow-hidden cursor-pointer"
+              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]"
             >
               <img
-                className=" h-[340px] w-full object-cover"
+                className=" h-[300px] w-full object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">
