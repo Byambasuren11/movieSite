@@ -78,15 +78,15 @@ const NowPlaying = () => {
               src={`https://image.tmdb.org/t/p/original${element.backdrop_path}`}
               alt={element.original_title}
             />
-            <div className="w-[400px] h-[400px] absolute left-10 top-180 mt-10 flex flex-col xl:z-10 xl:top-40 xl:left-80 xl:p-5 xl:space-y-4 xl:p-0">
-              <p className=" w-52 text-2xl font-semibold truncate text-white">
+            <div className="w-[400px] h-[400px] absolute left-10 top-180 mt-10 flex  flex-col xl:z-10 xl:top-40 xl:left-80 xl:p-5 xl:space-y-4 xl:p-0 xl:text-white">
+              <p className=" w-52 text-2xl font-semibold truncate text-black dark:text-white xl:text-white">
                 {element.original_title}
               </p>
-              <p className="flex text-foreground text-sm items-center gap-x-1 text-white ">
+              <p className="flex text-foreground text-sm items-center gap-x-1 text-black dark:text-white xl:text-white">
                 <Star /> {element.vote_average.toFixed(1)}
                 <span className="text-muted-foreground text-xs">/10</span>
               </p>
-              <p className="text-white w-[302px] text-sm line-clamp-5">
+              <p className="text-black dark:text-white xl:text-white w-[302px] text-sm line-clamp-5">
                 {element.overview}
               </p>
               <Dialog >
