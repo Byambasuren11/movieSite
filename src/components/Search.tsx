@@ -37,7 +37,7 @@ const Search1=()=>{
               <Search size={16} onClick={searchClick}/>
               <input
                 type="text"
-                className="h-9 focus-visible:ring-0 border-0 outline-none rounded-none hidden xl:block"
+                className="h-9 focus-visible:ring-0 border-0 outline-none rounded-none hidden md:block"
                 placeholder="Search..."
                 onChange={onChange}
               />

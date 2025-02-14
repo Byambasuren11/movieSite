@@ -43,7 +43,7 @@ const Genre = () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="border h-10 hidden xl:flex">
+            <NavigationMenuTrigger className="border h-10 hidden md:flex">
               <p>genre</p>
             </NavigationMenuTrigger>
 

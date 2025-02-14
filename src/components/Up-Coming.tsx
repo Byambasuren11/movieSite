@@ -1,4 +1,4 @@
-import { useParams } from "next/navigation";
+
 import Star from "./Star";
 import { useState, useEffect } from "react";
 import Link from "next/link";

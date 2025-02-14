@@ -9,7 +9,13 @@ import Footer from "@/components/Footer";
 import { ArrowRight, PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DialogHeader } from "@/components/ui/dialog";
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@radix-ui/react-dialog";
 import ReactPlayer from "react-player";
 
 type Movie = {
@@ -28,7 +34,7 @@ export default function Home() {
   const [clickedMovie, setClickedMovie] = useState<Movie>({} as Movie);
   const [movie, setMovie] = useState<Movie>({} as Movie);
   const [similarMovie, setSimilarMovie] = useState<Movie>({} as Movie);
-  const [video,setVideo]=useState();
+  const [video, setVideo] = useState();
   const getClickedMovie = async () => {
     try {
       const response = await fetch(
@@ -41,7 +47,7 @@ export default function Home() {
       console.log(error);
     }
   };
-  console.log(clickedMovie)
+  console.log(clickedMovie);
   const getDirector = async () => {
     try {
       const response = await fetch(
@@ -56,10 +62,11 @@ export default function Home() {
   };
   const getVideo = async (id) => {
     try {
-        const video=await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`)
-        const result1=await video.json();
-        setVideo(result1.results[0])
-      
+      const video = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
+      );
+      const result1 = await video.json();
+      setVideo(result1.results[0]);
     } catch (error) {
       console.log(error);
     }
@@ -84,10 +91,10 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <Header />
-      <div className="w-2/3 mt-20 flex flex-col gap-5">
+      <div className="w-full mt-20 flex flex-col gap-5 xl:w-2/3">
         <div className="flex w-full justify-between">
           <div>
-            <div className="break-words text-2xl font-bold w-52 lg:w-fit lg:text-4xl">
+            <div className="break-words text-2xl font-bold w-52 xl:w-fit xl:text-4xl">
               {clickedMovie.title}
             </div>
             <div>{clickedMovie.release_date}</div>
@@ -97,59 +104,68 @@ export default function Home() {
             <span className="text-muted-foreground text-xs">/10</span>
           </p>
         </div>
-        <div className="flex justify-between ">
-          <div className="w-[280px] h-[428px]rounded-sm overflow-hidden">
+        <div className="flex gap-x-8 mb-8 ">
+          <div className="overflow-hidden relative hidden xl:block w-[290px] h-[428px] rounded">
             <img
-              className="h-[428px] object-cover"
+              className="box-border block overflow-hidden opacity-100 m-0 p-0 absolute"
               src={`https://image.tmdb.org/t/p/original${clickedMovie.poster_path}`}
             />
           </div>
-          <div className="w-[760px] h-[428px] bg-black relative">
+          <div className="relative overflow-hidden w-[375px] lg:w-[760px] h-[211px] lg:h-[428px] lg:rounded">
             <img
               className="h-[428px] object-cover"
               src={`https://image.tmdb.org/t/p/original${clickedMovie.backdrop_path}`}
             />
-            <div className="absolute bottom-4 left-4 z-10">
-            <Dialog >
-                <DialogTrigger >
-              <Button  onClick={()=>getVideo(clickedMovie.id)} className=" rounded-full"><PlayIcon/></Button>
+            <div className="absolute left-6 bottom-6 z-20">
+              <Dialog>
+                <DialogTrigger>
+                  <Button
+                    onClick={() => getVideo(clickedMovie.id)}
+                    className=" rounded-full"
+                  >
+                    <PlayIcon />
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="w-fit max-w-4xl">
                   <DialogHeader>
                     <DialogTitle></DialogTitle>
-                    <DialogDescription>
-                    </DialogDescription>
-                    <ReactPlayer url={`https://www.youtube.com/watch?v=${video?.key}` }/>
+                    <DialogDescription></DialogDescription>
+                    <ReactPlayer
+                      url={`https://www.youtube.com/watch?v=${video?.key}`}
+                    />
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
-
             </div>
           </div>
         </div>
-        <div className="flex gap-2">
-          {clickedMovie.genres?.map((element, index) => (
-            <div
-              key={index}
-              className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
-            >
-              {element.name}
-            </div>
-          ))}
+        <div className="flex gap-x-[34px] xl:block">
+          <div className="relative overflow-hidden block w-[100px] h-[148px] rounded shrink-0 xl:hidden">
+            <img
+              className="absolute inset-0 z-10 transition-all duration-300 group-hover:bg-primary/30"
+              src={`https://image.tmdb.org/t/p/original${clickedMovie.poster_path}`}
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
+            {clickedMovie.genres?.map((element, index) => (
+              <div
+                key={index}
+                className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
+              >
+                {element.name}
+              </div>
+            ))}
+          </div>
+          <div className="text-base">{clickedMovie.overview}</div>
+          </div>
         </div>
-        <div className="text-base">{clickedMovie.overview}</div>
-        <div className="flex flex-col space-y-5 text-foreground mb-8 w-[1080px]">
+        <div className="space-y-5 text-foreground mb-8">
           <div>
             <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
               Director
             </div>
-            <div className="flex gap-10">
-              {/* {movie.crew?.map((element, index) => (
-                <div>
-                  {element.name}
-                </div>
-              ))} */}
-            </div>
+            <div className="flex gap-10"></div>
           </div>
           <div className=" font-bold w-16 mr-13 border-b w-full pb-3">
             writers
@@ -158,7 +174,7 @@ export default function Home() {
             <div className=" font-bold w-16 mr-13 flex">Stars</div>
             <div className="flex gap-10">
               {movie.cast?.slice(0, 5)?.map((element, index) => (
-                <ul className="flex items-center" key={index}>
+                <ul className="flex flex-1 flex-wrap" key={index}>
                   {element.name}
                 </ul>
               ))}
@@ -170,18 +186,20 @@ export default function Home() {
             <h3 className="text-foreground text-2xl font-semibold">
               More like this
             </h3>
-            <Link className="cursor-pointer flex" href={"/category/similar"}>see more <ArrowRight className="w-4"/></Link>
+            <Link className="cursor-pointer flex" href={"/category/similar"}>
+              see more <ArrowRight className="w-4" />
+            </Link>
           </div>
-          <div className="flex gap-6 flex-wrap w-[1080px] mt-6 ">
+          <div className="flex flex-wrap gap-5 lg:gap-8">
             {similarMovie.results?.slice(0, 5)?.map((element, index) => (
               <Link
                 href={`/details/${element.id}`}
                 // ID={id}
                 key={index}
-                className=" w-[196.8px] rounded-lg overflow-hidden cursor-pointer"
+                className="  group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]"
               >
                 <img
-                  className=" h-[300px] object-cover"
+                  className=" h-[300px] w-full object-cover"
                   src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
                 />
                 <div className="h-[90px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">

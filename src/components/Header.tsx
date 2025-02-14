@@ -1,11 +1,9 @@
-"use client";
+
 import MovieLogo from "@/components/Movie-Logo";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Search, ArrowRight } from "lucide-react";
+import { Sun, Moon} from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import Star from "./Star";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -33,7 +31,7 @@ const Header = () => {
           <MovieLogo />
           <p>Movie Z</p>
         </Link>
-        <div className=" flex gap-3 w-2/3 justify-end xl:justify-between">
+        <div className=" flex gap-3 w-2/3 justify-end md:justify-between">
           <div className="flex gap-4 ">
             <Genre />
             <Search1/>
