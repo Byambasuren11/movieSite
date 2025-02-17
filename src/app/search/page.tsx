@@ -73,7 +73,8 @@ const Genres = () => {
     getGenres();
   }, [searchParams]);
   return (
-    <Suspense>
+    <>
+
       <div className=" flex items-center flex-col">
         <Header />
         <div className="flex justify-between w-2/3 mt-20">
@@ -115,7 +116,7 @@ const Genres = () => {
           </div>
         </div>
       </div>
-    </Suspense>
+    </>
   );
 };
 export default Genres;
