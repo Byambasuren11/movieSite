@@ -4,13 +4,26 @@ import Paginations from "@/components/Pagination";
 import Star from "@/components/Star";
 import { ChevronRight } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import page from "../../details/page";
 import Link from "next/link";
 
+type movie={
+  vote_average: number;
+  overview: string;
+  title: string;
+  release_date: string;
+  backdrop_path: string;
+  id: string;
+  name:string;
+  poster_path: string;
+  genres: { name: string }[];
+  cast:{ name: string }[];
+  results:{id:string, poster_path:string, vote_average: number, title: string }[];
+}
 const Genres = () => {
-  const [clickedGenre, setClickedGenre] = useState();
-  const [genreMovie, setGenreMovie] = useState();
+  const [clickedGenre, setClickedGenre] = useState<movie[] | undefined>();
+  const [genreMovie, setGenreMovie] = useState<movie[]>();
   const router = useRouter();
   const searchParams = useSearchParams();
   const ids = searchParams.get("genres")
@@ -39,10 +52,15 @@ const Genres = () => {
       console.log(error);
     }
   };
-  const onClick1 = (id) => {
+  
+
+  const onClick1 = (id:string) => {
     const params = new URLSearchParams(searchParams.toString());
-    ids.push(id);
-    params.set("genres", ids?.join(","));
+    ids?.push(id);
+    if (ids){
+      params.set("genres", ids.join(","));
+    }
+    // params.set("genres", ids.join(","));
     router.push(`?${params.toString()}`);
   };
 
@@ -56,7 +74,7 @@ const Genres = () => {
     getGenres();
   }, [searchParams]);
   return (
-    <>
+    <Suspense>
       <div className=" flex items-center flex-col w-full">
         <Header />
         <div className="xl:flex justify-between w-3/4 mt-20 pl-16">
@@ -66,7 +84,7 @@ const Genres = () => {
               <div className="text-extrabold">See lists of movies by genre</div>
             </div>
           <div className="flex w-full gap-3 p-4 md:grid-cols-2 xl:w-[400px] flex-wrap cursor-pointer justify-start h-fit">
-            {clickedGenre?.map((element, index) => (
+            {clickedGenre?.map((element:movie, index) => (
               <div
                 className="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full cursor-pointer"
                 key={index}
@@ -106,7 +124,7 @@ const Genres = () => {
           </div>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 };
 export default Genres;

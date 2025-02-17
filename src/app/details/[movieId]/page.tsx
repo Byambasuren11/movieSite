@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import Star from "@/components/Star";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -26,6 +26,12 @@ type Movie = {
   backdrop_path: string;
   id: number;
   poster_path: string;
+  genres: { name: string }[];
+  cast:{ name: string }[];
+  results:{id:string, poster_path:string, vote_average: number, title: string }[];
+};
+type Video = {
+  key: string;
 };
 
 export default function Home() {
@@ -34,7 +40,7 @@ export default function Home() {
   const [clickedMovie, setClickedMovie] = useState<Movie>({} as Movie);
   const [movie, setMovie] = useState<Movie>({} as Movie);
   const [similarMovie, setSimilarMovie] = useState<Movie>({} as Movie);
-  const [video, setVideo] = useState();
+  const [video, setVideo] = useState<Video>();
   const getClickedMovie = async () => {
     try {
       const response = await fetch(
@@ -60,7 +66,7 @@ export default function Home() {
       console.log(error);
     }
   };
-  const getVideo = async (id) => {
+  const getVideo = async (id: number) => {
     try {
       const video = await fetch(
         `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`
@@ -89,6 +95,7 @@ export default function Home() {
     getSimilarMovie();
   }, []);
   return (
+    <Suspense>
     <div className="w-full flex flex-col justify-center items-center">
       <Header />
       <div className="w-full mt-20 flex flex-col gap-5 xl:w-2/3">
@@ -147,17 +154,17 @@ export default function Home() {
             />
           </div>
           <div className="flex flex-col gap-4">
-          <div className="flex gap-2">
-            {clickedMovie.genres?.map((element, index) => (
-              <div
-                key={index}
-                className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
-              >
-                {element.name}
-              </div>
-            ))}
-          </div>
-          <div className="text-base">{clickedMovie.overview}</div>
+            <div className="flex gap-2">
+              {clickedMovie.genres?.map((element, index) => (
+                <div
+                  key={index}
+                  className="inline-flex items-center border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground rounded-full text-xs w-fit"
+                >
+                  {element.name}
+                </div>
+              ))}
+            </div>
+            <div className="text-base">{clickedMovie.overview}</div>
           </div>
         </div>
         <div className="space-y-5 text-foreground mb-8">
@@ -218,5 +225,6 @@ export default function Home() {
       </div>
       <Footer />
     </div>
+    </Suspense>
   );
 }

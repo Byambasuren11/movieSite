@@ -15,8 +15,25 @@ const Genre = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const genre = searchParams.get("genre") || "1";
+  const ids = searchParams.get("genres")
+  ? searchParams.get("genres")?.split(",")
+  : [];
 
-  const [clickedGenre, setClickedGenre] = useState();
+  type movie={
+    vote_average: number;
+    overview: string;
+    title: string;
+    release_date: string;
+    backdrop_path: string;
+    id: string;
+    name:string;
+    poster_path: string;
+    genres: { name: string }[];
+    cast:{ name: string }[];
+    results:{id:string, poster_path:string, vote_average: number, title: string }[];
+  }
+
+  const [clickedGenre, setClickedGenre] = useState<movie[]>();
   const getClickedGenres = async () => {
     try {
       const response = await fetch(
@@ -32,12 +49,16 @@ const Genre = () => {
     getClickedGenres();
   }, []);
 
-  const onClick1 = (id) => {
+  const onClick1 = (id:string) => {
     const params = new URLSearchParams(searchParams.toString());
-    id.push(id);
-    params.set("genre", id.join(","));
-    router.push(`/genres?${params.toString()}`);
+    ids?.push(id);
+    if (ids){
+      params.set("genres", ids.join(","));
+    }
+    // params.set("genres", ids.join(","));
+    router.push(`?${params.toString()}`);
   };
+
   return (
     <>
       <NavigationMenu>

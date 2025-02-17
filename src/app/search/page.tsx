@@ -4,12 +4,26 @@ import Paginations from "@/components/Pagination";
 import Star from "@/components/Star";
 import { ChevronRight, SearchCode } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 
 const Genres = () => {
-  const [clickedGenre, setClickedGenre] = useState();
-  const [genreMovie, setGenreMovie] = useState();
+  type movie={
+    vote_average: number;
+    overview: string;
+    title: string;
+    release_date: string;
+    backdrop_path: string;
+    id: string;
+    name:string;
+    poster_path: string;
+    genres: { name: string }[];
+    cast:{ name: string }[];
+    results:{id:string, poster_path:string, vote_average: number, title: string }[];
+  }
+
+  const [clickedGenre, setClickedGenre] = useState<movie[]>();
+  const [genreMovie, setGenreMovie] = useState<movie[]>();
   const router = useRouter();
   const searchParams = useSearchParams();
   const ids = searchParams.get("genres")
@@ -38,14 +52,17 @@ const Genres = () => {
       console.log(error);
     }
   };
-  const onClick1 = (id) => {
+  const onClick1 = (id:string) => {
     const params = new URLSearchParams(searchParams.toString());
-    ids.push(id);
-    params.set("genres", ids?.join(","));
+    ids?.push(id);
+    if (ids){
+      params.set("genres", ids.join(","));
+    }
+    // params.set("genres", ids.join(","));
     router.push(`?${params.toString()}`);
   };
 
-  const onClick = (page) => {
+  const onClick = (page:string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", (Number(page)).toString());
     router.push(`?${params.toString()}`);
@@ -56,7 +73,7 @@ const Genres = () => {
     getGenres();
   }, [searchParams]);
   return (
-    <>
+    <Suspense>
       <div className=" flex items-center flex-col">
         <Header />
         <div className="flex justify-between w-2/3 mt-20">
@@ -98,7 +115,7 @@ const Genres = () => {
           </div>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 };
 export default Genres;

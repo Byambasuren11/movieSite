@@ -1,14 +1,29 @@
+"use client"
 import { useEffect, useState } from "react";
 import Star from "./Star";
 import Link from "next/link";
 import {Search, ArrowRight } from "lucide-react";
 
 const Search1=()=>{
-    const [search, setSearch] = useState("");
+  type movie={
+    vote_average: number;
+    overview: string;
+    title: string;
+    release_date: string;
+    backdrop_path: string;
+    id: string;
+    name:string;
+    poster_path: string;
+    genres: { name: string }[];
+    cast:{ name: string }[];
+    results:{id:string, poster_path:string, vote_average: number, title: string }[];
+  }
+
+    const [search, setSearch] = useState<movie[]>([]);
     const [se, setSe] = useState(false);
     const [clickSearch, setClickSearch] = useState(false);
   
-    const [searchResult, setSearchResult] = useState();
+    const [searchResult, setSearchResult] = useState<movie[]>();
     const getClickedGenres = async () => {
       try {
         const search1 = await fetch(
@@ -23,7 +38,7 @@ const Search1=()=>{
     useEffect(() => {
       getClickedGenres();
     }, [search]);
-    const onChange = (e) => {
+    const onChange = (e:any) => {
       setSearch(e.target.value);
       setSe(true);
     };
@@ -42,8 +57,8 @@ const Search1=()=>{
                 onChange={onChange}
               />
               <div className="absolute z-10 h-fit bg-white dark:bg-black rounded-xl top-9 left-[-150px] w-[577px]">
-                {searchResult?.slice(0, 5).map((element, index) => (
-                  <div className="flex m-4 gap-4 border-b">
+                {searchResult?.slice(0, 5)?.map((element, index) => (
+                  <div className="flex m-4 gap-4 border-b" key={index}>
                     <img
                       className="w-[67px] h-[100px] rounded-sm"
                       src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
@@ -74,7 +89,7 @@ const Search1=()=>{
                     className="px-4 py-2.5 text-sm font-medium text-foreground "
                     href="/search"
                   >
-                    See all results for "{search}"
+                    See all results for ""
                   </Link>
                 ) : (
                   <></>

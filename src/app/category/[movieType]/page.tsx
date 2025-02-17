@@ -4,7 +4,7 @@ import Paginations from "@/components/Pagination";
 import Star from "@/components/Star";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 type Movie = {
   vote_average: number;
@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <Suspense>
       <div className="w-full flex flex-col justify-center items-center">
         <Header />
         <div className="w-full xl:w-2/3 text-foreground text-2xl font-semibold  mt-1 mb-4">
@@ -78,6 +78,6 @@ export default function Home() {
           <Paginations onClick={onClick} page={page}/>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 }

@@ -41,15 +41,12 @@ const NowPlaying = () => {
         "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=59e727c8b34f9b1acd7cf78c59abfe03"
       );
       const result = await response.json();
-      // const video=await fetch(`https://api.themoviedb.org/3/movie/${result.results[0].id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`)
-      // const result1=await video.json();
-      // setVideo(result1.results)
       setMovies(result.results);
     } catch (error) {
       console.log(error);
     }
   };
-  const getVideo = async (id:number) => {
+  const getVideo = async (id: number) => {
     try {
         const video=await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US&api_key=59e727c8b34f9b1acd7cf78c59abfe03`)
         const result1=await video.json();

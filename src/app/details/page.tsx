@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 export default function Home () {
-    return(<p>test page shuuu</p>)
+    return(<Suspense>test page shuuu</Suspense>)
 }
