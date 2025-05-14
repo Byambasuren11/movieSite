@@ -8,8 +8,8 @@ type Movie = {
   overview: string;
   title: string;
   backdrop_path: string;
-  id:number;
-  poster_path:string;
+  id: number;
+  poster_path: string;
 };
 
 const Popular = () => {
@@ -32,17 +32,21 @@ const Popular = () => {
   }, []);
   return (
     <>
-      <div className="page-primary py-8 lg:py-13 space-y-8 lg:space-y-13">
+      <div className="page-primary py-8 w-full lg:py-13 space-y-8 lg:space-y-13 xl:w-2/3">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Popular</h3>
-          <Link href={`/category/popular`}><h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3></Link>
+          <Link href={`/category/popular`}>
+            <h3 className="cursor-pointer flex">
+              see more <ArrowRight className="w-4" />
+            </h3>
+          </Link>
         </div>
-        <div className="flex gap-6 flex-wrap w-1/3 mt-6 ">
+        <div className="flex flex-wrap gap-5 lg:gap-8 ">
           {popular.slice(0, 10).map((element, index) => (
             <Link
               href={`/details/${element.id}`}
               key={index}
-              className=" w-[236.5px] rounded-xl overflow-hidden"
+              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px] xl:w-[360px]"
             >
               <img
                 className=" h-[340px] w-full object-cover"

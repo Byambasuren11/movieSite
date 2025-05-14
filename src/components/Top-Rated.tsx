@@ -8,8 +8,8 @@ type Movie = {
   overview: string;
   title: string;
   backdrop_path: string;
-  id:number;
-  poster_path:string;
+  id: number;
+  poster_path: string;
 };
 
 const Top = () => {
@@ -32,20 +32,24 @@ const Top = () => {
   }, []);
   return (
     <>
-      <div className="page-primary py-8 sm:flex-wrap">
+      <div className="page-primary py-8 w-full lg:py-13 space-y-8 lg:space-y-13 xl:w-2/3">
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Top</h3>
-          <Link href={`/category/top_rated`}><h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3></Link>
+          <Link href={`/category/top_rated`}>
+            <h3 className="cursor-pointer flex">
+              see more <ArrowRight className="w-4" />
+            </h3>
+          </Link>
         </div>
-        <div className="flex gap-6 flex-wrap w-1/3 mt-6 ">
+        <div className="flex flex-wrap gap-5 lg:gap-8 ">
           {top.slice(0, 10).map((element, index) => (
-             <Link
-             href={`/details/${element.id}`}
-             key={index}
-             className=" w-[236.5px] rounded-xl overflow-hidden"
-           >
+            <Link
+              href={`/details/${element.id}`}
+              key={index}
+              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]  xl:w-[360px]"
+            >
               <img
-                className=" h-[340px] w-full object-cover"
+                className=" h-[300px] w-full object-cover"
                 src={`https://image.tmdb.org/t/p/original${element.poster_path}`}
               />
               <div className="h-[96px] bg-gray-200 dark:bg-gray-900 p-2 text-extrabold">

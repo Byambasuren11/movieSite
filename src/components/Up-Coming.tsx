@@ -1,4 +1,3 @@
-
 import Star from "./Star";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -35,7 +34,9 @@ export const Coming = () => {
         <div className="flex justify-between">
           <h3 className="text-foreground text-2xl font-semibold">Up Coming</h3>
           <Link href={`/category/upcoming`}>
-            <h3 className="cursor-pointer flex">see more <ArrowRight className="w-4"/></h3>
+            <h3 className="cursor-pointer flex">
+              see more <ArrowRight className="w-4" />
+            </h3>
           </Link>
         </div>
         <div className="flex flex-wrap gap-5 lg:gap-8 ">
@@ -44,7 +45,7 @@ export const Coming = () => {
               href={`/details/${element.id}`}
               // ID={id}
               key={index}
-              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]"
+              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]  xl:w-[360px]"
             >
               <img
                 className=" h-[300px] w-full object-cover"
