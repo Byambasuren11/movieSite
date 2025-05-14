@@ -45,7 +45,7 @@ export const Coming = () => {
               href={`/details/${element.id}`}
               // ID={id}
               key={index}
-              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]  xl:w-[360px]"
+              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]  "
             >
               <img
                 className=" h-[300px] w-full object-cover"
