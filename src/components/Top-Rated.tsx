@@ -46,7 +46,7 @@ const Top = () => {
             <Link
               href={`/details/${element.id}`}
               key={index}
-              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]  xl:w-[360px]"
+              className=" group w-[457.5px] overflow-hidden rounded-lg lg:w-[230px]  xl:w-[270px]"
             >
               <img
                 className=" h-[300px] w-full object-cover"
